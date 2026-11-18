@@ -71,7 +71,15 @@ Danh sách đầy đủ các cấp nằm trong sheet `Thu muc con (anh chup)` c�
 - `Cty Can Tuyen Dung N.V`: bảng ghi Google Docs, ảnh chụp trước đó có biểu tượng Google Sheet; trong Excel mình ghi Google Sheet, cần xác nhận.
 - Chưa xem được nội dung: `KPI- Đánh giá hiệu quả công việc`, `Đăng ky noi quy LD Cty GM 10…`, `Quy trinh-Quy che`, `Mau Tính thưởng Bonus Spa H…`, `bonus 19.9.25 Q2`, `Teambuilding 11. 2026`, `Ms Dung - HCNS`, `Ms Ly - Tuyển Dụng`, `BHXH-2026`.
 
-Cần xác nhận:
+## Bổ sung: nội dung "VH - Q7" (từ bảng tổng hợp video)
+
+Đã thêm toàn bộ cấu trúc vào sheet Excel (`3_VH` với `NHÀ HÀNG`, `SPA`…, và `TÀI LIỆU ĐÀO TẠO` với `2. SOP - Nghiệp vụ`, `6. Test`…). Trang web chưa đổi.
+
+Cần xác nhận: bảng ghi các thư mục này nằm trong `VH - Q7`, nhưng ảnh chụp trước đó cho thấy `VH - Q7` chỉ có `HCM_Q7` và `VH_Nhan Vien`. Video Drive hiển thị tiêu đề thư mục trước khi nội dung tải xong, nên mình tạm đặt dưới `VH - Q7 › HCM_Q7`.
+
+Điểm nên dọn dẹp ghi nhận từ bảng: nhiều file tạm `~$…` trong `2. SOP - Nghiệp vụ`; thư mục `NHÀ HÀNG` lồng `NHÀ HÀNG`, thiếu mục `3.`; `Salary Tháng 08.2026` chứa bảng công tháng 09 và tháng 10; file `PASS VÀ ID DELIVERY.xlsx` nên hạn chế quyền xem.
+
+Cần xác nhận (các mục khác):
 - Ảnh có tiêu đề "VH - Q7" nhưng nội dung là `3_VH`, `TÀI LIỆU ĐÀO TẠO` và 1 file Excel: theo video quay màn hình, Drive đổi tiêu đề trước khi tải xong nội dung, nên khả năng cao đây là nội dung của `HCM_Q7`. Mình ghi vào sheet Excel dưới `VH - Q7 › HCM_Q7` kèm ghi chú "cần xác nhận".
 - `MKT - ONLINE` đã xem nội dung của APP LOYALTY, BUDGET, BUS - GOLDEN LOTUS, MASTER PLAN, Mr. Minh, ONL_Nhan Vien. Chưa tải được nội dung: Data - Promo - thống kê MKT, DESIGN, ONL_Share, Ca Nhan_Mr Minh. Danh sách cấp 1 của thư mục này có thể còn mục bên dưới `ONL_Share`.
 - `MKT - OFFLINE`: chưa tải được nội dung OFF_Share, PPT (trong GLC PRODUCTION), Bao Gia, Chinh sach khach doan, Manual Membership App 2026. `Booking` là lối tắt, bên trong là các thư mục theo năm 2018–2023 và có thể còn tiếp.
