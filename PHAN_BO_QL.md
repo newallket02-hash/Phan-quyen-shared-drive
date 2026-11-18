@@ -57,7 +57,9 @@ Danh sách đầy đủ các cấp nằm trong sheet `Thu muc con (anh chup)` c�
 | 9_KT - KE TOAN (Noi bo) › KT - DN | 6 |
 
 Cần xác nhận:
-- Ảnh thứ hai có tiêu đề "VH - Q7" (3_VH, TÀI LIỆU ĐÀO TẠO, 1 file Excel) có nội dung khác ảnh đầu cùng tiêu đề; chưa đưa vào trang.
+- Ảnh có tiêu đề "VH - Q7" nhưng nội dung là `3_VH`, `TÀI LIỆU ĐÀO TẠO` và 1 file Excel: theo video quay màn hình, Drive đổi tiêu đề trước khi tải xong nội dung, nên khả năng cao đây là nội dung của `HCM_Q7`. Mình ghi vào sheet Excel dưới `VH - Q7 › HCM_Q7` kèm ghi chú "cần xác nhận".
 - `MKT - ONLINE` mới chụp đến `ONL_Share`, phần bên dưới chưa chụp.
+- Một số danh sách cuộn chưa hết (VH - Q1 › Đào Tạo, OPS, VH_ Baocao; VH - Q2 › 1. Đào tạo › CHƯƠNG TRÌNH ĐÀO TẠO HCM); sheet Excel có dòng "(còn mục bên dưới, chưa chụp hết)".
 - Một số tên bị cắt trong ảnh (có dấu …).
-- Các thư mục rỗng: VH - 63HB, NS_Q7, NS_100TBD, NS_76HV, KT - Tổng Hợp.
+- Thư mục rỗng: VH - 63HB, VH - 76HV, NS_Q7, NS_100TBD, NS_76HV, KT - Tổng Hợp.
+- Chưa chụp: NS_209TP, NS_Q1, nội dung `Báo cáo rau Đà Lạt`, `Báo cáo Test thịt-NH100`, `3. Nội quy - Quy định hiện hành`, và các folder trong 1_Bao cao, 7_DA…, 8_….
