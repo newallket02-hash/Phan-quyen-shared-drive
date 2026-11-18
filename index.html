@@ -252,11 +252,28 @@ function members(self, area, depts){
 const FOLDERS = MGR.map(m => m[4].map(fd => typeof fd === 'string' ? {f:fd, list:members(m[1], m[2], m[3])} : {f:fd.f, list:members(m[1], fd.area, m[3])}));
 
 /* File con có sẵn theo folder (điền khi có danh sách): 'Tên folder đầy đủ': ['file con 1','file con 2'] */
-const SUB = {};
+const SUB = {
+  "3_VH - Van Hanh › VH - 100TBD": ["Báo cáo rau Đà Lạt", "Báo cáo Test thịt-NH100"],
+  "3_VH - Van Hanh › VH - Q1": ["Đào Tạo", "Điện Nước", "OPS", "QLKD-HCM", "VH_ Baocao"],
+  "3_VH - Van Hanh › VH - Q2": ["1. Đào tạo", "2. Vận hành", "3. Nội quy - Quy định hiện hành", "4. Nhân sự", "5. Công việc liên quan mua hà…", "VH_Share"],
+  "3_VH - Van Hanh › VH - Q7": ["HCM_Q7", "VH_Nhan Vien"],
+  "3_VH - Van Hanh › VH - 209TP": ["BÁO CÁO"],
+  "5_TM - Thu Mua › TM - DN": ["01. Thu Mua DN", "TM_Nhan Vien", "🌈 cty Kho List 2026.xlsx", "KIỂM KÊ TÀI SẢN 63HB T8.26.rar", "KIỂM KÊ TÀI SẢN 76HV -T08.2…", "KIỂM KÊ TÀI SẢN 209TP - THÁ…", "NH 100 - kế toán DC KINH DO…", "NH 100 - kế toán TÀI SẢN CỐ …"],
+  "5_TM - Thu Mua › TM - Q2": ["Thu Mua Q2"],
+  "9_NS_Branch › NS_Q2": ["BHXH", "Phiếu thông tin ứng viên", "cty HR interview 2026.xlsx", "BÁO CÁO CV.xlsx", "Cơm nhân viên 2026.xlsx", "Khảo sát hút thuốc (T10.2026)", "LỊCH LÀM VIỆC 2026.xlsx", "Mẫu DNTT.xlsx", "Partime.xlsx", "Q2. DS ứng viên 2026"],
+  "9_NS_Branch › NS_63HB": ["NS - Báo cáo Interview", "NS - Báo cáo Ngày - Tuần", "NS - Báo cáo NS chi nhánh", "NS - Bảo hiểm Xã hội", "NS - Chi phí xử lý hồ sơ", "NS - Đánh giá NV định kỳ", "NS - Kế hoạch Nhân sự", "NS - Lương", "NS - Quy trình, quy định", "NS- Công đoàn cơ sở GL Global"],
+  "9_MKT - MARKETING › MKT - ONLINE": ["APP LOYALTY", "BUDGET", "BUS - GOLDEN LOTUS", "Data - Promo - thống kê MKT", "DESIGN", "MASTER PLAN", "Mr. Minh", "ONL_Nhan Vien", "ONL_Share"],
+  "9_MKT - MARKETING › MKT - OFFLINE": ["01. Marketing Offline", "Booking", "Checklist", "GLC PRODUCTION", "Khach doan 2026", "MUSIC", "OFF_Share", "OFF_Số liệu", "OFFLINE_Nhan Vien", "SOP", "Bang_Ra_Soat_Thuong_Hieu_…", "Golden Lotus_Membership Ap…", "Golden_Lotus_Membership Ap…", "Golden_Lotus_Membership_A…", "Plan marketing B2B.xlsx"],
+  "9_KT - KE TOAN (Noi bo) › KT - Q7": ["01. Nhân viên kế toán Q7", "02. Quản lý kế toán Q7"],
+  "9_KT - KE TOAN (Noi bo) › KT - Q2": ["01. Nhân viên kế toán Q2", "02. Quản lý kế toán Q2", "Ca Nhan_Ms Thu", "KT - Share"],
+  "9_KT - KE TOAN (Noi bo) › KT - Q1": ["01. Nhân viên kế toán Q1", "02. Quản lý kế toán Q1"],
+  "9_KT - KE TOAN (Noi bo) › KT - Dự Án": ["Dự án - Lãi Vay - Oneno 2025", "Dự án - Lãi Vay 2026", "Q2 Cong trinh"],
+  "9_KT - KE TOAN (Noi bo) › KT - DN": ["01. Nhân viên kế toán DN", "02. Quản lý kế toán DN", "Ca Nhan_Ms Phuoc", "Ca Nhan_Ms Yen", "File báo cáo", "Nhan Vien"]
+};
 
 /* trạng thái: st[fi] = {act, items:[{n, sel:{key:quyền}, ext}]} */
 let cur = null, st = [];
-const KEY = 'glh_phanquyen_draft_v2';
+const KEY = 'glh_phanquyen_draft_v3';
 const ALL = 'Toàn bộ folder';
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify({cur, st, note:$('note').value})); }catch(e){} }
 function load(){ try{ return JSON.parse(localStorage.getItem(KEY) || 'null'); }catch(e){ return null; } }

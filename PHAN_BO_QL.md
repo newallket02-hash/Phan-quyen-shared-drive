@@ -34,3 +34,30 @@
 | 93 | 9_NS_Cty › 2. Chi tiêu lương tuyển Nv - Bonus | trinh.bgd@goldenmg.com |
 | 94 | 9_NS_Cty › NS_Share | nhansu@goldenlotus.world |
 | 71 | 9_MKT - MARKETING › MKT - ONLINE | thanh.qlmkt@goldenmg.com (sửa từ thanh.tqlmkt@goldenlotus.world) |
+
+## Thư mục con đã chụp (từ ảnh Drive)
+
+Danh sách đầy đủ các cấp nằm trong sheet `Thu muc con (anh chup)` của file Excel. Trên trang web, mỗi folder có thêm nút chọn từng thư mục con/file cấp 1:
+
+| Folder | Số mục con trên trang |
+|---|---|
+| 3_VH - Van Hanh › VH - 100TBD | 2 |
+| 3_VH - Van Hanh › VH - Q1 | 5 |
+| 3_VH - Van Hanh › VH - Q2 | 6 |
+| 3_VH - Van Hanh › VH - Q7 | 2 |
+| 3_VH - Van Hanh › VH - 209TP | 1 |
+| 5_TM - Thu Mua › TM - DN | 8 |
+| 5_TM - Thu Mua › TM - Q2 | 1 |
+| 9_NS_Branch › NS_Q2 | 10 |
+| 9_NS_Branch › NS_63HB | 10 |
+| 9_MKT - MARKETING › MKT - ONLINE | 9 (chưa chụp hết) |
+| 9_MKT - MARKETING › MKT - OFFLINE | 15 |
+| 9_KT - KE TOAN (Noi bo) › KT - Q1 / Q2 / Q7 | 2 / 4 / 2 |
+| 9_KT - KE TOAN (Noi bo) › KT - Dự Án | 3 |
+| 9_KT - KE TOAN (Noi bo) › KT - DN | 6 |
+
+Cần xác nhận:
+- Ảnh thứ hai có tiêu đề "VH - Q7" (3_VH, TÀI LIỆU ĐÀO TẠO, 1 file Excel) có nội dung khác ảnh đầu cùng tiêu đề; chưa đưa vào trang.
+- `MKT - ONLINE` mới chụp đến `ONL_Share`, phần bên dưới chưa chụp.
+- Một số tên bị cắt trong ảnh (có dấu …).
+- Các thư mục rỗng: VH - 63HB, NS_Q7, NS_100TBD, NS_76HV, KT - Tổng Hợp.
