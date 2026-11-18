@@ -56,6 +56,12 @@ Danh sách đầy đủ các cấp nằm trong sheet `Thu muc con (anh chup)` c�
 | 9_KT - KE TOAN (Noi bo) › KT - Dự Án | 3 |
 | 9_KT - KE TOAN (Noi bo) › KT - DN | 6 |
 
+## Bổ sung từ video thứ ba
+
+- `7_DA Xay Dung` thực tế có thêm 5 thư mục cá nhân `Ca Nhan_Mr Dũng`, `Ca Nhan_Mr Phương`, `Ca Nhan_Ms Hải`, `Ca Nhan_Ms Loan` (hạn chế quyền), `Ca Nhan_Ms Thảo` mà cây trong Excel chưa có. Đã gán cho `trinh.gd@goldenmg.com` (Giám đốc Dự án) cùng `Pet Cafe Project` và `XD_Nhan Vien`; danh sách trong drive còn mục bên dưới `Pet Cafe Project`, chưa nhìn thấy hết.
+- `3_Bao Tri` (7 người) và `3_Branch Event plan` (11 người) đều hiển thị 0,0 KB trong danh sách Shared Drive, nên hai drive này đang trống.
+- `9_KT - KE TOAN (Noi bo)`: cả 6 thư mục cấp 2 đều có biểu tượng hạn chế quyền.
+
 Cần xác nhận:
 - Ảnh có tiêu đề "VH - Q7" nhưng nội dung là `3_VH`, `TÀI LIỆU ĐÀO TẠO` và 1 file Excel: theo video quay màn hình, Drive đổi tiêu đề trước khi tải xong nội dung, nên khả năng cao đây là nội dung của `HCM_Q7`. Mình ghi vào sheet Excel dưới `VH - Q7 › HCM_Q7` kèm ghi chú "cần xác nhận".
 - `MKT - ONLINE` đã xem nội dung của APP LOYALTY, BUDGET, BUS - GOLDEN LOTUS, MASTER PLAN, Mr. Minh, ONL_Nhan Vien. Chưa tải được nội dung: Data - Promo - thống kê MKT, DESIGN, ONL_Share, Ca Nhan_Mr Minh. Danh sách cấp 1 của thư mục này có thể còn mục bên dưới `ONL_Share`.
@@ -65,3 +71,5 @@ Cần xác nhận:
 - Một số tên bị cắt trong ảnh (có dấu …).
 - Thư mục rỗng: VH - 63HB, VH - 76HV, NS_Q7, NS_100TBD, NS_76HV, KT - Tổng Hợp.
 - Chưa chụp: NS_209TP, NS_Q1, nội dung `Báo cáo rau Đà Lạt`, `Báo cáo Test thịt-NH100`, `3. Nội quy - Quy định hiện hành`, và các folder trong 1_Bao cao, 7_DA…, 8_….
+- `7_DA Xay Dung` hiển thị 9 người trong Drive, Excel ghi 10.
+- Chưa mở được trong video: `TM_Nhan Vien`, `Ca Nhan_Mr Phương`, `CAPSULE HOTEL`, `Pet Cafe Project`, `Ca Nhan_Ms Yen`, `Nhan Vien` (trong `KT - DN`), `NS_209TP`, `NS_Q1`.
