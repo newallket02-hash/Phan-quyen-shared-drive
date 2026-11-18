@@ -238,7 +238,7 @@ const defGroups = f => {
   return g === 'ALL' ? GORDER.filter(x => x !== 'BGD') : g.slice();
 };
 
-/* Quản lý: email · key nhân sự · (khu vực, bộ phận: dự phòng) · folder */
+/* Chỉ các QL trong cột "QL được phân quyền" của Excel mới có trong danh sách này: email · key nhân sự · (khu vực, bộ phận: dự phòng) · folder */
 const MGR = [
   ['dung.pql76@goldenlotus.world','dung.pql76','DN',[],['1_Bao cao cong viec (Cty, Branch) all › DN_76HV','3_VH - Van Hanh › VH - 76HV','9_NS_Branch › NS_76HV']],
   ['yen.ql100@goldenlotus.world','yen.ql100','DN',[],['1_Bao cao cong viec (Cty, Branch) all › DN_100TBD','3_VH - Van Hanh › VH - 100TBD','9_NS_Branch › NS_100TBD']],
@@ -259,18 +259,16 @@ const MGR = [
   ['minh.digital@goldenmg.com','minh.digital','Q1',['MKT'],['8_Cty App (Mr.Minh, Ms.truc, Ms.trinh) › APP_IT Meeting (Zintech)','8_Cty App (Mr.Minh, Ms.truc, Ms.trinh) › APP_DS NV Đăng ký app',
     '8_Cty App (Mr.Minh, Ms.truc, Ms.trinh) › App_Share','8_Cty App (Mr.Minh, Ms.truc, Ms.trinh) › App_Nhan Vien','8_Golden iOS Data › iOS_Nhan Vien']],
   ['trinh.gd@goldenmg.com','trinh.gd','Q2',['DA'],['8_Cty App (Mr.Minh, Ms.truc, Ms.trinh) › APP_Membership App Meeting','7_DA Phat Trien (Ms.Khanh) › Du an-Khanh','7_DA Phat Trien (Ms.Khanh) › DA - Project 2026 (DA ms.Khanh) 업무 관리.xlsx','7_DA Xay Dung › Pet Cafe Project','7_DA Xay Dung › XD_Nhan Vien',
-    '7_DA Xay Dung › Ca Nhan_Mr Dũng','7_DA Xay Dung › Ca Nhan_Mr Phương','7_DA Xay Dung › Ca Nhan_Ms Hải','7_DA Xay Dung › Ca Nhan_Ms Loan','7_DA Xay Dung › Ca Nhan_Ms Thảo']],
+    '7_DA Xay Dung › Ca Nhan_Mr Dũng','7_DA Xay Dung › Ca Nhan_Mr Phương','7_DA Xay Dung › Ca Nhan_Ms Hải','7_DA Xay Dung › Ca Nhan_Ms Loan','7_DA Xay Dung › Ca Nhan_Ms Thảo','10_Big Boss - BAN GIAM DOC › (Toàn bộ Shared Drive)']],
   ['mkt@goldenlotus.world','mkt','Q2',['MKT'],['8_Cty App (Mr.Minh, Ms.truc, Ms.trinh) › HDSD APP GOLDEN MEMBERSHIP','8_Cty App (Mr.Minh, Ms.truc, Ms.trinh) › APP_Manual - FAQ']],
-  ['thu.qlkt@goldenmg.com','thu.qlkt','Q1',['KT'],['9_KT - KE TOAN (Noi bo) › (Toàn bộ Shared Drive)','9_KT - KE TOAN (Noi bo) › KT - Dự Án','9_KT - KE TOAN (Noi bo) › KT - Tổng Hợp']],
+  ['thu.qlkt@goldenmg.com','thu.qlkt','Q1',['KT'],['9_KT - KE TOAN (Noi bo) › (Toàn bộ Shared Drive)','9_KT - KE TOAN (Noi bo) › KT - Dự Án','9_KT - KE TOAN (Noi bo) › KT - Tổng Hợp','9_KT - Tai Chinh › (Toàn bộ Shared Drive)']],
   ['lai.kt47@goldenmg.com','lai.kt47','Q1',['KT'],['9_KT - KE TOAN (Noi bo) › KT - Q1']],
   ['nga.ktq2@goldenmg.com','nga.ktq2','Q2',['KT'],['9_KT - KE TOAN (Noi bo) › KT - Q2']],
   ['vong.ktq7@goldenmg.com','vong.ktq7','Q7',['KT'],['9_KT - KE TOAN (Noi bo) › KT - Q7']],
   ['yen.kt63@goldenmg.com','yen.kt63','DN',['KT'],['9_KT - KE TOAN (Noi bo) › KT - DN']],
   ['thanh.qlmkt@goldenmg.com','thanh.qlmkt','Q1',['MKT'],['9_MKT - MARKETING › MKT - ONLINE']],
   ['nhansu@goldenlotus.world','nhansu','Q7',['NS'],['9_NS_Cty › Chính sách bốc thăm may mắn.png','9_NS_Cty › Golden_Lotus_Thong_Bao_Boc_Tham_1_Trang.docx','9_NS_Cty › Cty Can Tuyen Dung N.V',
-    '9_NS_Cty › NS_Nhan Vien (File cá nhân tự làm)','9_NS_Cty › 4. Thông báo Cty','9_NS_Cty › 3. Form cam kết. Cty','9_NS_Cty › NS_Share']],
-  ['thuy.tc@goldenmg.com','thuy.tc','Q2',['KT'],['9_KT - Tai Chinh › (Toàn bộ Shared Drive)']],
-  ['boss@goldenmg.com','boss','Q2',[],['10_Big Boss - BAN GIAM DOC › (Toàn bộ Shared Drive)']]
+    '9_NS_Cty › NS_Nhan Vien (File cá nhân tự làm)','9_NS_Cty › 4. Thông báo Cty','9_NS_Cty › 3. Form cam kết. Cty','9_NS_Cty › NS_Share']]
 ];
 const PERMS = ['Người xem','Người nhận xét','Người chỉnh sửa','Quản lý nội dung'];
 

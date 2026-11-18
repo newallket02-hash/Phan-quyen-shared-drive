@@ -98,3 +98,12 @@ Cần xác nhận (các mục khác):
 - Thêm vào danh sách: Boss (`boss@goldenmg.com`), Nguyễn Thị Trinh (`trinh.gd`) vào Ban Giám đốc, Trần Thị Uyên Phương (`phuong.tlkt`), Ms. Loan (`Loan.glcproject@gmail.com`, Leader Đội Dự án). Boss được gán `10_Big Boss - BAN GIAM DOC`.
 - Ban Giám đốc (Boss, Nguyễn Thị Trinh, Lê Thị Thu Trinh) luôn hiện ở mọi folder. Các nhóm còn lại chọn theo nhóm làm việc: Vận hành & QL chi nhánh, Nhân sự, Marketing, Tài chính - Kế toán, Thu mua, Dự án. Danh sách từng nhóm nằm ở sheet `Nhom lam viec`.
 - Nhóm mặc định theo Shared Drive (ngoài BGĐ): WorkSpace và 1_Bao cao = tất cả nhóm; SOP Training = NS + VH; Bao Tri = NS + VH + DA; Event plan = MKT + VH; 3_VH = VH + NS; Mua Hang = TM + KT + VH; TM = TM; DA = DA; 8_Cty App = MKT; 8_iOS Data = MKT + NS; 9_KT (cả hai drive) = KT; 9_MKT = MKT; 9_NS = NS; 10_Big Boss = chỉ BGĐ.
+
+## Chỉ QL trong cột "QL được phân quyền" mới được phân quyền
+
+Bước "Bạn là ai?" chỉ còn 22 QL có trong cột G của Excel: dung.pql76, yen.ql100, thang.pql209, ha.qlq7, hieu.qlq2, hang.qlq1, trinh.bgd, nguyet.vh, dinh.pql63, phi.tm, thuy.tm, vy.gdmkt, minh.digital, trinh.gd, mkt, thu.qlkt, lai.kt47, nga.ktq2, vong.ktq7, yen.kt63, thanh.qlmkt, nhansu.
+
+- Không còn `thuy.tc` và `boss` trong danh sách QL (vẫn hiện trong danh sách người được cấp quyền).
+- `9_KT - Tai Chinh` chuyển cho `thu.qlkt@goldenmg.com` (Quản lý kế toán chung); `10_Big Boss - BAN GIAM DOC` chuyển cho `trinh.gd@goldenmg.com` (Ban Giám đốc). Cột G sheet `Cay Thu Muc` đã cập nhật cho `9_KT - Tai Chinh`.
+- `khanh.da@goldenmg.com` còn trong cột G gốc nhưng đã bị loại theo yêu cầu trước; `thanh.tqlmkt@goldenmg.com` trong cột G gốc là gõ nhầm, trang dùng `thanh.qlmkt@goldenmg.com`.
+- Ban Giám đốc không có Ms. Dương (pháp lý): danh sách trên trang không có `legal@goldenlotus.world`.
