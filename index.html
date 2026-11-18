@@ -43,6 +43,12 @@ h2{font-size:18px;color:var(--navy);margin:6px 0 4px}
 .fold.open .ch{transform:rotate(180deg)}
 .fb{display:none;border-top:1px solid var(--line);padding:10px 12px 14px}
 .fold.open .fb{display:block}
+.gl{font-size:12px;color:var(--muted);margin:2px 0 6px}
+.grp{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.grp button{font:inherit;font-size:13px;font-weight:600;border:1.5px solid var(--line);background:#fff;color:var(--muted);border-radius:20px;padding:0 12px;min-height:36px;cursor:pointer}
+.grp button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.gh{font-size:12px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.3px;margin:10px 0 2px;padding:6px 4px 0;border-top:1px solid var(--line)}
+.per .ro{font-size:12px;color:var(--navy);margin:-4px 0 8px}
 .tools{display:flex;gap:8px;margin-bottom:8px}
 .tools .search{margin:0;padding-top:10px;padding-bottom:10px;font-size:15px}
 .per{padding:10px 4px;border-bottom:1px solid #F0F2F6}
@@ -112,7 +118,7 @@ textarea{width:100%;font:inherit;font-size:16px;border:1px solid var(--line);bor
       <span><b>Xem</b> = Người xem</span><span><b>Nhận xét</b> = Người nhận xét</span>
       <span><b>Sửa</b> = Người chỉnh sửa</span><span><b>QL</b> = Quản lý nội dung</span>
     </div>
-    <p class="hint">Mở từng folder → chọn <b>Toàn bộ folder</b> hoặc từng <b>file con</b> → bấm mức quyền cho người cần cấp. Bấm lại để bỏ chọn. File con chưa có trong danh sách thì bấm <b>＋ File con</b> để thêm.</p>
+    <p class="hint">Mở từng folder → chọn <b>Toàn bộ folder</b> hoặc từng <b>file con</b> → bấm mức quyền cho người cần cấp. Bấm lại để bỏ chọn. File con chưa có trong danh sách thì bấm <b>＋ File con</b> để thêm. Ban Giám đốc luôn hiện ở mọi folder; người ở nhóm khác thì bật nút nhóm hoặc dùng ô tìm kiếm.</p>
     <div id="folders"></div>
     <div class="sum">
       <h3>Ghi chú chung (nếu có)</h3>
@@ -141,70 +147,98 @@ textarea{width:100%;font:inherit;font-size:16px;border:1px solid var(--line);bor
 <div class="toast" id="toast"></div>
 
 <script>
-/* ===== DỮ LIỆU NHÂN SỰ ===== */
+/* ===== DỮ LIỆU NHÂN SỰ: key · [họ tên, email, vai trò] ===== */
 const S = {
-  'minh.digital':['Mai Văn Minh','minh.digital@goldenmg.com'],
-  'trinh.bgd':['Lê Thị Thu Trinh','trinh.bgd@goldenmg.com'],
-  'thanh.qlmkt':['Cao Thị Huyền Thanh','thanh.qlmkt@goldenmg.com'],
-  'thu.qlkt':['Phạm Thị Hồng Thu','thu.qlkt@goldenmg.com'],
-  'hang.qlq1':['Kiều Nguyễn Thúy Hằng','hang.qlq1@goldenlotus.world'],
-  'an.tc47':['Lê Thị Vạn An','an.tc47@goldenmg.com'],
-  'thuy.kt47':['Nguyễn Đào Thùy','thuy.kt47@goldenmg.com'],
-  'chi.kt47':['Đào Thị Kim Chi','chi.kt47@goldenmg.com'],
-  'duy.kt47':['Phạm Đăng Đan Duy','duy.kt47@goldenmg.com'],
-  'lai.kt47':['Trần Thị Lai','lai.kt47@goldenmg.com'],
-  'tuoi.kt47':['Phạm Thị Tươi','tuoi.kt47@goldenmg.com'],
-  'mkt':['Trúc + Hoàng','mkt@goldenlotus.world'],
-  'vy.gdmkt':['Lê Thị Hồng Vy','vy.gdmkt@goldenmg.com'],
-  'nguyet.vh':['Đỗ Thị Ánh Nguyệt','nguyet.vh@goldenlotus.world'],
-  'qlkt.q2':['Quản lý kế toán Q2','qlkt.q2@goldenmg.com'],
-  'hieu.qlq2':['Trần Thị Thu Hiếu','hieu.qlq2@goldenlotus.world'],
-  'anh.vpq2':['Nguyễn Trần Phương Anh','anh.vpq2@goldenlotus.world'],
-  'phuong.vpq2':['Trần Thị Mỹ Phương','phuong.vpq2@goldenlotus.world'],
-  'mai.hr':['Lê Thị Thanh Mai','mai.hr@goldenlotus.world'],
-  'duan':['Team Dự Án','duan@goldenlotus.world'],
-  'thuy.tm':['Phạm Thị Hoàng Thúy','thuy.tm@goldenlotus.world'],
-  'thuy.tc':['Đoàn Thị Thanh Thúy','thuy.tc@goldenmg.com'],
-  'nga.ktq2':['Trần Thị Thanh Nga','nga.ktq2@goldenmg.com'],
-  'ha.qlq7':['Lê Thị Hà','ha.qlq7@goldenlotus.world'],
-  'nhansu':['Phương','nhansu@goldenlotus.world'],
-  'marketing':['Lê Thị Ngọc Thắm','marketing@goldenlotus.world'],
-  'dung.ktq7':['Nguyễn Thị Hoàng Dung','dung.ktq7@goldenmg.com'],
-  'vong.ktq7':['Đặng Thị Vòng','vong.ktq7@goldenmg.com'],
-  'viet.qlns':['Đặng Thị Linh Việt','viet.qlns@goldenmg.com'],
-  'yen.ql100':['Nguyễn Bảo Yến','yen.ql100@goldenlotus.world'],
-  'thang.pql209':['Nguyễn Thị Thắng','thang.pql209@goldenlotus.world'],
-  'dinh.pql63':['Nguyễn Thị Định','dinh.pql63@goldenlotus.world'],
-  'dung.pql76':['Trần Lê Hoài Dung','dung.pql76@goldenlotus.world'],
-  'truc.mktdn':['Lê Hương Trúc','truc.mktdn@goldenlotus.world'],
-  'phi.tm':['Bùi Thị Hoàn Phi','phi.tm@goldenlotus.world'],
-  'anh.kt63':['Huỳnh Thị Kim Ánh','anh.kt63@goldenmg.com'],
-  'chau.kt63':['Nguyễn Thị Minh Châu','chau.kt63@goldenmg.com'],
-  'phuoc.kt63':['Hứa Đình Diệu Phước','phuoc.kt63@goldenmg.com'],
-  'van.kt63':['Nguyễn Thị Thanh Vân VP','van.kt63@goldenmg.com'],
-  'yen.kt63':['Trần Thị Kim Yến','yen.kt63@goldenmg.com'],
-  /* Không hiện trong danh sách chọn (BGĐ / Trợ lý GĐ), chỉ dùng làm tên người đề nghị */
-  'khanh.da':['Phạm Trần Kim Khánh','khanh.da@goldenmg.com'],
-  'trinh.gd':['Nguyễn Thị Trinh','trinh.gd@goldenmg.com']
+  'boss':['Boss','boss@goldenmg.com','Ban Giám đốc'],
+  'trinh.gd':['Nguyễn Thị Trinh','trinh.gd@goldenmg.com','Ban Giám đốc'],
+  'trinh.bgd':['Lê Thị Thu Trinh','trinh.bgd@goldenmg.com','Ban Giám đốc / Nhân sự'],
+  'phuong.tlkt':['Trần Thị Uyên Phương','phuong.tlkt@goldenmg.com','Trợ lý kế toán / Trợ lý GĐ'],
+  'loan.glcproject':['Ms. Loan','Loan.glcproject@gmail.com','Leader Đội Dự án'],
+  'duan':['Team Dự Án','duan@goldenlotus.world','Dự án Q2'],
+  'nguyet.vh':['Đỗ Thị Ánh Nguyệt','nguyet.vh@goldenlotus.world','Vận hành Q2'],
+  'hieu.qlq2':['Trần Thị Thu Hiếu','hieu.qlq2@goldenlotus.world','Quản lý Q2 / Vận hành Q2'],
+  'anh.vpq2':['Nguyễn Trần Phương Anh','anh.vpq2@goldenlotus.world','Trợ lý VP / Vận hành Q2'],
+  'phuong.vpq2':['Trần Thị Mỹ Phương','phuong.vpq2@goldenlotus.world','Trợ lý VP / Vận hành Q2'],
+  'mai.hr':['Lê Thị Thanh Mai','mai.hr@goldenlotus.world','HR / Vận hành Q2'],
+  'vy.gdmkt':['Lê Thị Hồng Vy','vy.gdmkt@goldenmg.com','Giám đốc Marketing / Marketing Offline'],
+  'mkt':['Hoàng','mkt@goldenlotus.world','Marketing Offline'],
+  'qlkt.q2':['Quản lý kế toán Q2','qlkt.q2@goldenmg.com','Quản lý kế toán Q2'],
+  'thuy.tc':['Đoàn Thị Thanh Thúy','thuy.tc@goldenmg.com','Tài chính - Kế toán Q2'],
+  'nga.ktq2':['Trần Thị Thanh Nga','nga.ktq2@goldenmg.com','Kế toán Q2'],
+  'thuy.tm':['Phạm Thị Hoàng Thúy','thuy.tm@goldenlotus.world','Thu mua'],
+  'hang.qlq1':['Kiều Nguyễn Thùy Hằng','hang.qlq1@goldenlotus.world','Quản lý CN Q1'],
+  'thanh.qlmkt':['Cao Thị Huyền Thanh','thanh.qlmkt@goldenmg.com','Quản lý Marketing / Marketing Online'],
+  'minh.digital':['Mai Văn Minh','minh.digital@goldenmg.com','Digital / Marketing Online'],
+  'thu.qlkt':['Phạm Thị Hồng Thu','thu.qlkt@goldenmg.com','Quản lý kế toán chung'],
+  'an.tc47':['Lê Thị Vạn An','an.tc47@goldenmg.com','Tài chính'],
+  'thuy.kt47':['Nguyễn Đào Thủy','thuy.kt47@goldenmg.com','Kế toán'],
+  'chi.kt47':['Đào Thị Kim Chi','chi.kt47@goldenmg.com','Kế toán'],
+  'duy.kt47':['Phạm Đăng Đan Duy','duy.kt47@goldenmg.com','Kế toán'],
+  'lai.kt47':['Trần Thị Lại','lai.kt47@goldenmg.com','Kế toán'],
+  'tuoi.kt47':['Phạm Thị Tươi','tuoi.kt47@goldenmg.com','Kế toán'],
+  'ha.qlq7':['Lê Thị Hà','ha.qlq7@goldenlotus.world','Quản lý CN Q7'],
+  'marketing':['Lê Thị Ngọc Thắm','marketing@goldenlotus.world','Marketing Online'],
+  'nhansu':['Phương','nhansu@goldenlotus.world','HR / Nhân sự'],
+  'dung.ktq7':['Nguyễn Thị Hoàng Dung','dung.ktq7@goldenmg.com','Kế toán Q7'],
+  'vong.ktq7':['Đặng Thị Vòng','vong.ktq7@goldenmg.com','Kế toán Q7'],
+  'viet.qlns':['Đặng Thị Linh Việt','viet.qlns@goldenmg.com','Quản lý nhân sự toàn Đà Nẵng'],
+  'dinh.pql63':['Nguyễn Thị Định','dinh.pql63@goldenlotus.world','Phó quản lý CN 63 HB'],
+  'truc.mktdn':['Lê Hương Trúc','truc.mktdn@goldenlotus.world','Marketing Đà Nẵng / Nhân sự - VP 63HB'],
+  'anh.kt63':['Huỳnh Thị Kim Ánh','anh.kt63@goldenmg.com','Kế toán 63HB'],
+  'chau.kt63':['Nguyễn Thị Minh Châu','chau.kt63@goldenmg.com','Kế toán 63HB'],
+  'phuoc.kt63':['Hứa Đình Diệu Phước','phuoc.kt63@goldenmg.com','Kế toán 63HB'],
+  'van.kt63':['Nguyễn Thị Thanh Vân','van.kt63@goldenmg.com','Kế toán 63HB'],
+  'yen.kt63':['Trần Thị Kim Yến','yen.kt63@goldenmg.com','Kế toán 63HB'],
+  'phi.tm':['Bùi Thị Hoàn Phi','phi.tm@goldenlotus.world','Thu mua 63HB'],
+  'yen.ql100':['Nguyễn Bảo Yến','yen.ql100@goldenlotus.world','Quản lý CN 100 TBĐ'],
+  'thang.pql209':['Nguyễn Thị Thắng','thang.pql209@goldenlotus.world','Phó quản lý CN 209 TP'],
+  'dung.pql76':['Trần Lê Hoài Dung','dung.pql76@goldenlotus.world','Phó quản lý CN 76 HV']
 };
 
-/* Khu vực */
-const AREA = {
-  Q1:['minh.digital','trinh.bgd','thanh.qlmkt','thu.qlkt','hang.qlq1','an.tc47','thuy.kt47','chi.kt47','duy.kt47','lai.kt47','tuoi.kt47'],
-  Q2:['mkt','vy.gdmkt','nguyet.vh','qlkt.q2','hieu.qlq2','anh.vpq2','phuong.vpq2','mai.hr','duan','thuy.tm','thuy.tc','nga.ktq2'],
-  Q7:['ha.qlq7','nhansu','marketing','dung.ktq7','vong.ktq7'],
-  DN:['viet.qlns','yen.ql100','thang.pql209','dinh.pql63','dung.pql76','truc.mktdn','phi.tm','anh.kt63','chau.kt63','phuoc.kt63','van.kt63','yen.kt63']
+/* Nhóm làm việc (BGĐ luôn hiện ở mọi folder; các nhóm khác chọn theo nhóm) */
+const GORDER = ['BGD','VH','NS','MKT','KT','TM','DA'];
+const GROUPS = {
+  BGD:{label:'Ban Giám đốc', m:['boss','trinh.gd','trinh.bgd']},
+  VH:{label:'Vận hành & Quản lý CN', m:['nguyet.vh','hieu.qlq2','anh.vpq2','phuong.vpq2','mai.hr','hang.qlq1','ha.qlq7','dinh.pql63','yen.ql100','thang.pql209','dung.pql76']},
+  NS:{label:'Nhân sự', m:['trinh.bgd','nhansu','viet.qlns','mai.hr','truc.mktdn']},
+  MKT:{label:'Marketing', m:['vy.gdmkt','mkt','thanh.qlmkt','minh.digital','marketing','truc.mktdn']},
+  KT:{label:'Tài chính - Kế toán', m:['phuong.tlkt','thu.qlkt','qlkt.q2','thuy.tc','nga.ktq2','an.tc47','thuy.kt47','chi.kt47','duy.kt47','lai.kt47','tuoi.kt47','dung.ktq7','vong.ktq7','anh.kt63','chau.kt63','phuoc.kt63','van.kt63','yen.kt63']},
+  TM:{label:'Thu mua', m:['thuy.tm','phi.tm']},
+  DA:{label:'Dự án', m:['loan.glcproject','duan']}
 };
-/* Bộ phận (dùng để thêm người cùng bộ phận ở khu vực khác) */
-const DEPT = {
-  MKT:['minh.digital','thanh.qlmkt','marketing','mkt','vy.gdmkt','truc.mktdn'],
-  NS:['trinh.bgd','nhansu','viet.qlns','mai.hr'],
-  KT:['thu.qlkt','qlkt.q2','an.tc47','thuy.tc','nga.ktq2','thuy.kt47','chi.kt47','duy.kt47','lai.kt47','tuoi.kt47','anh.kt63','chau.kt63','phuoc.kt63','van.kt63','yen.kt63','dung.ktq7','vong.ktq7'],
-  TM:['phi.tm','thuy.tm'],
-  DA:['trinh.gd','khanh.da','duan']
+/* Nhóm mặc định hiển thị theo Shared Drive (ngoài BGĐ). ALL = tất cả nhóm */
+const DRIVE_G = {
+  '** WorkSpace Noi Dung (all staff)':'ALL',
+  '1_Bao cao cong viec (Cty, Branch) all':'ALL',
+  '1_Staff SOP Training (NS, Van Hanh)':['NS','VH'],
+  '3_Bao Tri (BT, NS, VH, DA)':['NS','VH','DA'],
+  '3_Branch Event plan (Marketing, Van Hanh)':['MKT','VH'],
+  '3_VH - Van Hanh':['VH','NS'],
+  '5_Mua Hang (Thu mua, Ke toan, Van Hanh)':['TM','KT','VH'],
+  '5_TM - Thu Mua':['TM'],
+  '7_DA Phat Trien (Ms.Khanh)':['DA'],
+  '7_DA Xay Dung':['DA'],
+  '8_Cty App (Mr.Minh, Ms.truc, Ms.trinh)':['MKT'],
+  '8_Golden iOS Data':['MKT','NS'],
+  '9_KT - KE TOAN (Noi bo)':['KT'],
+  '9_KT - Tai Chinh':['KT'],
+  '9_MKT - MARKETING':['MKT'],
+  '9_NS_Branch':['NS'],
+  '9_NS_Cty':['NS'],
+  '10_Big Boss - BAN GIAM DOC':[]
+};
+/* Ghi đè cho từng folder cụ thể */
+const FOLDER_G = {
+  '7_DA Phat Trien (Ms.Khanh) › Du an chi Vy':['DA','MKT']
+};
+const PG = {};   /* key người -> danh sách nhóm */
+GORDER.forEach(g => GROUPS[g].m.forEach(k => { (PG[k] = PG[k] || []).includes(g) || PG[k].push(g); }));
+const defGroups = f => {
+  const g = FOLDER_G[f] || DRIVE_G[f.split(' › ')[0]] || 'ALL';
+  return g === 'ALL' ? GORDER.filter(x => x !== 'BGD') : g.slice();
 };
 
-/* Quản lý: email · key nhân sự · khu vực · bộ phận · folder (folder có thể ghi đè khu vực bằng {f, area}) */
+/* Quản lý: email · key nhân sự · (khu vực, bộ phận: dự phòng) · folder */
 const MGR = [
   ['dung.pql76@goldenlotus.world','dung.pql76','DN',[],['1_Bao cao cong viec (Cty, Branch) all › DN_76HV','3_VH - Van Hanh › VH - 76HV','9_NS_Branch › NS_76HV']],
   ['yen.ql100@goldenlotus.world','yen.ql100','DN',[],['1_Bao cao cong viec (Cty, Branch) all › DN_100TBD','3_VH - Van Hanh › VH - 100TBD','9_NS_Branch › NS_100TBD']],
@@ -221,11 +255,10 @@ const MGR = [
   ['dinh.pql63@goldenlotus.world','dinh.pql63','DN',[],['3_VH - Van Hanh › VH - 63HB','9_NS_Branch › NS_63HB']],
   ['phi.tm@goldenlotus.world','phi.tm','DN',['TM'],['5_Mua Hang (Thu mua, Ke toan, Van Hanh) › MH_DN','5_TM - Thu Mua › TM - DN']],
   ['thuy.tm@goldenlotus.world','thuy.tm','Q2',['TM'],['5_Mua Hang (Thu mua, Ke toan, Van Hanh) › MH_HCM','5_TM - Thu Mua › TM - Q2','5_TM - Thu Mua › TM - Trung Tâm']],
-  ['khanh.da@goldenmg.com','khanh.da','Q2',['DA'],['7_DA Phat Trien (Ms.Khanh) › Du an-Khanh','7_DA Phat Trien (Ms.Khanh) › DA - Project 2026 (DA ms.Khanh) 업무 관리.xlsx']],
   ['vy.gdmkt@goldenmg.com','vy.gdmkt','Q2',['MKT'],['7_DA Phat Trien (Ms.Khanh) › Du an chi Vy','9_MKT - MARKETING › MKT - OFFLINE','9_MKT - MARKETING › Menu Giá (Mới)','3_Branch Event plan (Marketing, Van Hanh) › (Toàn bộ Shared Drive)']],
   ['minh.digital@goldenmg.com','minh.digital','Q1',['MKT'],['8_Cty App (Mr.Minh, Ms.truc, Ms.trinh) › APP_IT Meeting (Zintech)','8_Cty App (Mr.Minh, Ms.truc, Ms.trinh) › APP_DS NV Đăng ký app',
     '8_Cty App (Mr.Minh, Ms.truc, Ms.trinh) › App_Share','8_Cty App (Mr.Minh, Ms.truc, Ms.trinh) › App_Nhan Vien','8_Golden iOS Data › iOS_Nhan Vien']],
-  ['trinh.gd@goldenmg.com','trinh.gd','Q2',['DA'],['8_Cty App (Mr.Minh, Ms.truc, Ms.trinh) › APP_Membership App Meeting','7_DA Xay Dung › Pet Cafe Project','7_DA Xay Dung › XD_Nhan Vien',
+  ['trinh.gd@goldenmg.com','trinh.gd','Q2',['DA'],['8_Cty App (Mr.Minh, Ms.truc, Ms.trinh) › APP_Membership App Meeting','7_DA Phat Trien (Ms.Khanh) › Du an-Khanh','7_DA Phat Trien (Ms.Khanh) › DA - Project 2026 (DA ms.Khanh) 업무 관리.xlsx','7_DA Xay Dung › Pet Cafe Project','7_DA Xay Dung › XD_Nhan Vien',
     '7_DA Xay Dung › Ca Nhan_Mr Dũng','7_DA Xay Dung › Ca Nhan_Mr Phương','7_DA Xay Dung › Ca Nhan_Ms Hải','7_DA Xay Dung › Ca Nhan_Ms Loan','7_DA Xay Dung › Ca Nhan_Ms Thảo']],
   ['mkt@goldenlotus.world','mkt','Q2',['MKT'],['8_Cty App (Mr.Minh, Ms.truc, Ms.trinh) › HDSD APP GOLDEN MEMBERSHIP','8_Cty App (Mr.Minh, Ms.truc, Ms.trinh) › APP_Manual - FAQ']],
   ['thu.qlkt@goldenmg.com','thu.qlkt','Q1',['KT'],['9_KT - KE TOAN (Noi bo) › (Toàn bộ Shared Drive)','9_KT - KE TOAN (Noi bo) › KT - Dự Án','9_KT - KE TOAN (Noi bo) › KT - Tổng Hợp']],
@@ -236,7 +269,8 @@ const MGR = [
   ['thanh.qlmkt@goldenmg.com','thanh.qlmkt','Q1',['MKT'],['9_MKT - MARKETING › MKT - ONLINE']],
   ['nhansu@goldenlotus.world','nhansu','Q7',['NS'],['9_NS_Cty › Chính sách bốc thăm may mắn.png','9_NS_Cty › Golden_Lotus_Thong_Bao_Boc_Tham_1_Trang.docx','9_NS_Cty › Cty Can Tuyen Dung N.V',
     '9_NS_Cty › NS_Nhan Vien (File cá nhân tự làm)','9_NS_Cty › 4. Thông báo Cty','9_NS_Cty › 3. Form cam kết. Cty','9_NS_Cty › NS_Share']],
-  ['thuy.tc@goldenmg.com','thuy.tc','Q2',['KT'],['9_KT - Tai Chinh › (Toàn bộ Shared Drive)']]
+  ['thuy.tc@goldenmg.com','thuy.tc','Q2',['KT'],['9_KT - Tai Chinh › (Toàn bộ Shared Drive)']],
+  ['boss@goldenmg.com','boss','Q2',[],['10_Big Boss - BAN GIAM DOC › (Toàn bộ Shared Drive)']]
 ];
 const PERMS = ['Người xem','Người nhận xét','Người chỉnh sửa','Quản lý nội dung'];
 
@@ -245,12 +279,12 @@ const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const strip = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/Đ/g,'D').toLowerCase();
 const initials = n => n.split(/\s+/).filter(Boolean).slice(-2).map(w => w[0]).join('').toUpperCase();
-function members(self, area, depts){
+function peopleFor(self){
   const out = [];
-  [AREA[area], ...depts.map(d => DEPT[d])].forEach(l => l.forEach(k => { if (k !== self && !out.includes(k)) out.push(k); }));
+  GORDER.forEach(g => GROUPS[g].m.forEach(k => { if (k !== self && !out.includes(k)) out.push(k); }));
   return out;
 }
-const FOLDERS = MGR.map(m => m[4].map(fd => typeof fd === 'string' ? {f:fd, list:members(m[1], m[2], m[3])} : {f:fd.f, list:members(m[1], fd.area, m[3])}));
+const FOLDERS = MGR.map(m => m[4].map(fd => { const f = typeof fd === 'string' ? fd : fd.f; return {f, list:peopleFor(m[1]), def:defGroups(f)}; }));
 
 /* File con có sẵn theo folder (điền khi có danh sách): 'Tên folder đầy đủ': ['file con 1','file con 2'] */
 const SUB = {
@@ -283,7 +317,7 @@ const SUB = {
 
 /* trạng thái: st[fi] = {act, items:[{n, sel:{key:quyền}, ext}]} */
 let cur = null, st = [];
-const KEY = 'glh_phanquyen_draft_v3';
+const KEY = 'glh_phanquyen_draft_v4';
 const ALL = 'Toàn bộ folder';
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify({cur, st, note:$('note').value})); }catch(e){} }
 function load(){ try{ return JSON.parse(localStorage.getItem(KEY) || 'null'); }catch(e){ return null; } }
@@ -310,7 +344,7 @@ $('mgrList').addEventListener('click', e => {
 
 function pick(i, keep){
   if (!keep && cur !== i){
-    st = FOLDERS[i].map(fd => ({act:0, items:[newItem(ALL), ...(SUB[fd.f] || []).map(newItem)]}));
+    st = FOLDERS[i].map(fd => ({act:0, g:fd.def.slice(), items:[newItem(ALL), ...(SUB[fd.f] || []).map(newItem)]}));
   }
   cur = i;
   const m = MGR[i], n = S[m[1]][0];
@@ -331,10 +365,14 @@ function drawFolders(){
         <div class="items" id="it${fi}"></div>
         <div class="addrow" id="ar${fi}"><input type="text" placeholder="Tên hoặc link file / thư mục con" data-addin="${fi}"><button class="btn nav sm" data-addok="${fi}">Thêm</button></div>
         <div class="cur" id="cu${fi}"></div>
-        <div class="tools"><input class="search" type="search" placeholder="Tìm người…" data-sq="${fi}"></div>
-        ${fd.list.map(k => `<div class="per" data-k="${k}" data-s="${esc(strip(S[k][0] + ' ' + S[k][1]))}">
-          <div class="n">${esc(S[k][0])}</div><div class="e">${esc(S[k][1])}</div>
-          <div class="seg">${PERMS.map(p => `<button type="button" data-p="${p}">${SHORT[p]}</button>`).join('')}</div></div>`).join('')}
+        <div class="gl">Hiển thị theo nhóm làm việc (Ban Giám đốc luôn hiện):</div>
+        <div class="grp" id="gp${fi}"></div>
+        <div class="tools"><input class="search" type="search" placeholder="Tìm người (tìm trong tất cả nhóm)…" data-sq="${fi}"></div>
+        ${fd.list.map((k, idx) => {
+          const pr = PG[k][0], head = idx === 0 || PG[fd.list[idx - 1]][0] !== pr ? `<div class="gh" data-gh="${pr}">${esc(GROUPS[pr].label)}</div>` : '';
+          return head + `<div class="per" data-k="${k}" data-g="${PG[k].join(' ')}" data-s="${esc(strip(S[k][0] + ' ' + S[k][1] + ' ' + S[k][2]))}">
+          <div class="n">${esc(S[k][0])}</div><div class="e">${esc(S[k][1])}</div><div class="ro">${esc(S[k][2])}</div>
+          <div class="seg">${PERMS.map(p => `<button type="button" data-p="${p}">${SHORT[p]}</button>`).join('')}</div></div>`; }).join('')}
         <div class="ext"><label>✉️ Email ngoài cho mục đang chọn (nếu có)</label>
           <textarea rows="2" data-ext="${fi}" placeholder="VD: abc@gmail.com – Xem"></textarea></div>
         <button class="lnk" data-clr="${fi}">Bỏ chọn tất cả trong mục này</button>
@@ -360,6 +398,26 @@ function showItem(fi){
     p.classList.toggle('on', !!v);
   });
   box.querySelector(`[data-ext="${fi}"]`).value = it.ext;
+  applyVis(fi);
+}
+
+/* hiển thị người theo nhóm làm việc: BGĐ luôn hiện, người đã chọn luôn hiện, ô tìm kiếm tìm trong mọi nhóm */
+function applyVis(fi){
+  const box = document.querySelector(`.fold[data-fi="${fi}"]`), f = st[fi], fd = FOLDERS[cur][fi];
+  if (!Array.isArray(f.g)) f.g = fd.def.slice();
+  const act = new Set(['BGD', ...f.g]);
+  $('gp' + fi).innerHTML = GORDER.filter(g => g !== 'BGD').map(g => `<button type="button" class="${act.has(g) ? 'on' : ''}" data-grp="${fi}:${g}">${esc(GROUPS[g].label)}</button>`).join('');
+  const q = strip((box.querySelector(`[data-sq="${fi}"]`).value || '').trim());
+  const sel = new Set(); f.items.forEach(x => Object.keys(x.sel).forEach(k => sel.add(k)));
+  box.querySelectorAll('.per').forEach(p => {
+    const show = q ? p.dataset.s.includes(q) : sel.has(p.dataset.k) || p.dataset.g.split(' ').some(g => act.has(g));
+    p.style.display = show ? '' : 'none';
+  });
+  box.querySelectorAll('.gh').forEach(h => {
+    let n = h.nextElementSibling, any = false;
+    while (n && n.classList.contains('per')){ if (n.style.display !== 'none') any = true; n = n.nextElementSibling; }
+    h.style.display = any ? '' : 'none';
+  });
 }
 
 function addSub(fi){
@@ -373,6 +431,13 @@ function addSub(fi){
 $('folders').addEventListener('click', e => {
   const fh = e.target.closest('.fh');
   if (fh){ fh.parentElement.classList.toggle('open'); return; }
+  const gb = e.target.closest('[data-grp]');
+  if (gb){
+    const [fi, g] = gb.dataset.grp.split(':'), f = st[+fi];
+    if (!Array.isArray(f.g)) f.g = FOLDERS[cur][+fi].def.slice();
+    const i = f.g.indexOf(g); if (i >= 0) f.g.splice(i, 1); else f.g.push(g);
+    applyVis(+fi); save(); return;
+  }
   const ib = e.target.closest('[data-item]');
   if (ib){ const [fi, j] = ib.dataset.item.split(':').map(Number); st[fi].act = j; showItem(fi); save(); return; }
   const pl = e.target.closest('[data-plus]');
@@ -402,10 +467,7 @@ $('folders').addEventListener('keydown', e => {
 $('folders').addEventListener('input', e => {
   const t = e.target;
   if (t.dataset.ext !== undefined){ const fi = +t.dataset.ext; st[fi].items[st[fi].act].ext = t.value; refresh(); save(); }
-  if (t.dataset.sq !== undefined){
-    const q = strip(t.value.trim());
-    t.closest('.fb').querySelectorAll('.per').forEach(p => p.style.display = !q || p.dataset.s.includes(q) ? '' : 'none');
-  }
+  if (t.dataset.sq !== undefined) applyVis(+t.dataset.sq);
 });
 $('folders').addEventListener('change', e => { if (e.target.dataset.ext !== undefined) showItem(+e.target.dataset.ext); });
 $('note').addEventListener('input', save);

@@ -90,3 +90,11 @@ Cần xác nhận (các mục khác):
 - Chưa chụp: NS_209TP, NS_Q1, nội dung `Báo cáo rau Đà Lạt`, `Báo cáo Test thịt-NH100`, `3. Nội quy - Quy định hiện hành`, và các folder trong 1_Bao cao, 7_DA…, 8_….
 - `7_DA Xay Dung` hiển thị 9 người trong Drive, Excel ghi 10.
 - Chưa mở được trong video: `TM_Nhan Vien`, `Ca Nhan_Mr Phương`, `CAPSULE HOTEL`, `Pet Cafe Project`, `Ca Nhan_Ms Yen`, `Nhan Vien` (trong `KT - DN`), `NS_209TP`, `NS_Q1`.
+
+## Danh sách nhân sự và nhóm làm việc (cập nhật theo danh sách mới)
+
+- Đã loại hoàn toàn Ms. Khánh (`khanh.da@goldenmg.com`); `legal@goldenlotus.world` không có trong danh sách trên trang.
+- Hai thư mục trước đây gán cho Ms. Khánh (`7_DA Phat Trien (Ms.Khanh) › Du an-Khanh` và file Excel `DA - Project 2026…`) chuyển cho `trinh.gd@goldenmg.com` (Giám đốc Dự án, nay thuộc Ban Giám đốc). Cột G sheet `Cay Thu Muc` đã cập nhật.
+- Thêm vào danh sách: Boss (`boss@goldenmg.com`), Nguyễn Thị Trinh (`trinh.gd`) vào Ban Giám đốc, Trần Thị Uyên Phương (`phuong.tlkt`), Ms. Loan (`Loan.glcproject@gmail.com`, Leader Đội Dự án). Boss được gán `10_Big Boss - BAN GIAM DOC`.
+- Ban Giám đốc (Boss, Nguyễn Thị Trinh, Lê Thị Thu Trinh) luôn hiện ở mọi folder. Các nhóm còn lại chọn theo nhóm làm việc: Vận hành & QL chi nhánh, Nhân sự, Marketing, Tài chính - Kế toán, Thu mua, Dự án. Danh sách từng nhóm nằm ở sheet `Nhom lam viec`.
+- Nhóm mặc định theo Shared Drive (ngoài BGĐ): WorkSpace và 1_Bao cao = tất cả nhóm; SOP Training = NS + VH; Bao Tri = NS + VH + DA; Event plan = MKT + VH; 3_VH = VH + NS; Mua Hang = TM + KT + VH; TM = TM; DA = DA; 8_Cty App = MKT; 8_iOS Data = MKT + NS; 9_KT (cả hai drive) = KT; 9_MKT = MKT; 9_NS = NS; 10_Big Boss = chỉ BGĐ.
