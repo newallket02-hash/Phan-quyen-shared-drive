@@ -115,3 +115,9 @@ Ban Giám đốc (Boss, Nguyễn Thị Trinh, Lê Thị Thu Trinh) mặc định
 ## Ô "Mail cá nhân của các thành viên khác"
 
 Ô "Ghi chú chung" ở cuối bước 2 đã đổi thành ô nhập mail cá nhân của các thành viên chưa có trong danh sách (mỗi email một dòng, ghi thêm quyền và folder). Nội dung này hiện thành một mục riêng ở màn hình tổng hợp, trong nội dung copy/gửi Zalo/Email và trong cột cuối của file CSV. Chỉ nhập mail mà chưa chọn người nào vẫn bấm được "Xem tổng hợp".
+
+## Ghi kết quả phân quyền vào Google Sheet
+
+Đã tạo Google Sheet "Phân quyền Shared Drive - Đề nghị từ QL" (tab `Phan quyen` nhận dữ liệu, tab `Huong dan` có 6 bước và mã Apps Script). Trang đã có nút "📊 Gửi vào Google Sheet" ở bước 3, đang ẩn cho đến khi gắn địa chỉ web app (biến `SHEET_URL` trong `index.html`). Mã nhận dữ liệu nằm ở `apps-script/Code.gs`.
+
+Đã bỏ dòng ghi chú Ban Giám đốc ở từng folder; màn hình tổng hợp và nội dung copy/gửi vẫn ghi "Ban Giám đốc: mặc định có mặt ở tất cả folder".

@@ -43,7 +43,6 @@ h2{font-size:18px;color:var(--navy);margin:6px 0 4px}
 .fold.open .ch{transform:rotate(180deg)}
 .fb{display:none;border-top:1px solid var(--line);padding:10px 12px 14px}
 .fold.open .fb{display:block}
-.bgd{font-size:13px;line-height:1.5;color:var(--navy);background:#EEF1F8;border-radius:10px;padding:8px 10px;margin-bottom:10px}
 .gl{font-size:12px;color:var(--muted);margin:2px 0 6px}
 .grp{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
 .grp button{font:inherit;font-size:13px;font-weight:600;border:1.5px solid var(--line);background:#fff;color:var(--muted);border-radius:20px;padding:0 12px;min-height:36px;cursor:pointer}
@@ -134,6 +133,8 @@ textarea{width:100%;font:inherit;font-size:16px;border:1px solid var(--line);bor
     <div class="meta" id="meta"></div>
     <div id="sumList"></div>
     <div class="acts">
+      <button class="btn pri" id="sheet" style="margin-left:0;display:none">📊 Gửi vào Google Sheet</button>
+      <div class="meta" id="sheetMsg" style="display:none;margin:0"></div>
       <button class="btn pri" id="share" style="margin-left:0">📤 Gửi qua Zalo / Email</button>
       <button class="btn nav" id="copy">📋 Copy nội dung</button>
       <button class="btn gh" id="csv">⬇️ Tải file CSV (Excel)</button>
@@ -149,6 +150,9 @@ textarea{width:100%;font:inherit;font-size:16px;border:1px solid var(--line);bor
 <div class="toast" id="toast"></div>
 
 <script>
+/* Địa chỉ web app (Apps Script) ghi vào Google Sheet. Để trống = ẩn nút "Gửi vào Google Sheet". */
+let SHEET_URL = '';
+
 /* ===== DỮ LIỆU NHÂN SỰ: key · [họ tên, email, vai trò] ===== */
 const S = {
   'boss':['Boss','boss@goldenmg.com','Ban Giám đốc'],
@@ -366,7 +370,6 @@ function drawFolders(){
         <div class="items" id="it${fi}"></div>
         <div class="addrow" id="ar${fi}"><input type="text" placeholder="Tên hoặc link file / thư mục con" data-addin="${fi}"><button class="btn nav sm" data-addok="${fi}">Thêm</button></div>
         <div class="cur" id="cu${fi}"></div>
-        <div class="bgd">🏛️ <b>Ban Giám đốc</b> (${GROUPS.BGD.m.map(k => esc(S[k][0])).join(', ')}) mặc định có mặt ở tất cả folder, không cần chọn.</div>
         <div class="gl">Chọn người theo nhóm làm việc:</div>
         <div class="grp" id="gp${fi}"></div>
         <div class="tools"><input class="search" type="search" placeholder="Tìm người (tìm trong tất cả nhóm)…" data-sq="${fi}"></div>
@@ -507,9 +510,32 @@ $('next').addEventListener('click', () => {
   const mailCard = d.note ? `<div class="sum"><h3>✉️ Mail cá nhân của các thành viên khác</h3><div class="e" style="font-size:13px;color:#1f2937">${esc(d.note).replace(/\n/g, '<br>')}</div></div>` : '';
   $('sumList').innerHTML = bgdNote + Object.keys(by).map(f => `<div class="sum"><h3>${f.split(' › ').length > 2 ? '📄' : '📁'} ${esc(f)}</h3>${
     by[f].map(r => `<div class="row"><div><div>${esc(r.name)}</div><div class="e">${esc(r.email)}</div></div><div class="r">${r.ext ? '' : esc(r.perm)}</div></div>`).join('')}</div>`).join('') + mailCard;
+  $('sheet').style.display = SHEET_URL ? '' : 'none';
+  $('sheet').disabled = false; $('sheet').textContent = '📊 Gửi vào Google Sheet';
+  $('sheetMsg').style.display = 'none';
+  subId = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
   go(3);
 });
 $('back').addEventListener('click', () => go(2));
+
+let subId = '';
+$('sheet').addEventListener('click', async () => {
+  const d = collect(), btn = $('sheet'), msg = $('sheetMsg');
+  if (!d.rows.length && !d.note) { toast('Chưa có nội dung để gửi'); return; }
+  btn.disabled = true; btn.textContent = 'Đang gửi…'; msg.style.display = 'none';
+  try {
+    const r = await fetch(SHEET_URL, {method:'POST', body:JSON.stringify({id:subId, mgr:d.mgr, mgrName:d.mgrName, time:d.time, note:d.note, rows:d.rows})});
+    const j = await r.json();
+    if (!j.ok) throw new Error(j.error || 'Lỗi không rõ');
+    btn.textContent = '✅ Đã gửi vào Google Sheet';
+    msg.textContent = j.dup ? 'Nội dung này đã được gửi trước đó.' : `Đã ghi ${j.count} dòng vào Google Sheet. Có thể gửi thêm qua Zalo/Email nếu cần.`;
+    msg.style.display = '';
+  } catch (e) {
+    btn.disabled = false; btn.textContent = '📊 Gửi vào Google Sheet';
+    msg.textContent = 'Không gửi được vào Google Sheet. Hãy bấm "Gửi qua Zalo / Email" hoặc "Copy nội dung" để gửi thủ công.';
+    msg.style.display = '';
+  }
+});
 
 function asText(d){
   let t = `ĐỀ NGHỊ PHÂN QUYỀN SHARED DRIVE\nNgười đề nghị: ${d.mgrName} (${d.mgr})\nThời gian: ${d.time}\n`;
