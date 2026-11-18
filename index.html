@@ -43,6 +43,7 @@ h2{font-size:18px;color:var(--navy);margin:6px 0 4px}
 .fold.open .ch{transform:rotate(180deg)}
 .fb{display:none;border-top:1px solid var(--line);padding:10px 12px 14px}
 .fold.open .fb{display:block}
+.bgd{font-size:13px;line-height:1.5;color:var(--navy);background:#EEF1F8;border-radius:10px;padding:8px 10px;margin-bottom:10px}
 .gl{font-size:12px;color:var(--muted);margin:2px 0 6px}
 .grp{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
 .grp button{font:inherit;font-size:13px;font-weight:600;border:1.5px solid var(--line);background:#fff;color:var(--muted);border-radius:20px;padding:0 12px;min-height:36px;cursor:pointer}
@@ -118,7 +119,7 @@ textarea{width:100%;font:inherit;font-size:16px;border:1px solid var(--line);bor
       <span><b>Xem</b> = Người xem</span><span><b>Nhận xét</b> = Người nhận xét</span>
       <span><b>Sửa</b> = Người chỉnh sửa</span><span><b>QL</b> = Quản lý nội dung</span>
     </div>
-    <p class="hint">Mở từng folder → chọn <b>Toàn bộ folder</b> hoặc từng <b>file con</b> → bấm mức quyền cho người cần cấp. Bấm lại để bỏ chọn. File con chưa có trong danh sách thì bấm <b>＋ File con</b> để thêm. Ban Giám đốc luôn hiện ở mọi folder; người ở nhóm khác thì bật nút nhóm hoặc dùng ô tìm kiếm.</p>
+    <p class="hint">Mở từng folder → chọn <b>Toàn bộ folder</b> hoặc từng <b>file con</b> → bấm mức quyền cho người cần cấp. Bấm lại để bỏ chọn. File con chưa có trong danh sách thì bấm <b>＋ File con</b> để thêm. Ban Giám đốc mặc định có mặt ở mọi folder nên không cần chọn; người ở nhóm khác thì bật nút nhóm hoặc dùng ô tìm kiếm.</p>
     <div id="folders"></div>
     <div class="sum">
       <h3>Ghi chú chung (nếu có)</h3>
@@ -277,9 +278,10 @@ const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const strip = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/Đ/g,'D').toLowerCase();
 const initials = n => n.split(/\s+/).filter(Boolean).slice(-2).map(w => w[0]).join('').toUpperCase();
+const BGD = new Set(GROUPS.BGD.m);   /* BGĐ mặc định có mặt ở mọi folder, không cần chọn quyền */
 function peopleFor(self){
   const out = [];
-  GORDER.forEach(g => GROUPS[g].m.forEach(k => { if (k !== self && !out.includes(k)) out.push(k); }));
+  GORDER.filter(g => g !== 'BGD').forEach(g => GROUPS[g].m.forEach(k => { if (k !== self && !BGD.has(k) && !out.includes(k)) out.push(k); }));
   return out;
 }
 const FOLDERS = MGR.map(m => m[4].map(fd => { const f = typeof fd === 'string' ? fd : fd.f; return {f, list:peopleFor(m[1]), def:defGroups(f)}; }));
@@ -363,7 +365,8 @@ function drawFolders(){
         <div class="items" id="it${fi}"></div>
         <div class="addrow" id="ar${fi}"><input type="text" placeholder="Tên hoặc link file / thư mục con" data-addin="${fi}"><button class="btn nav sm" data-addok="${fi}">Thêm</button></div>
         <div class="cur" id="cu${fi}"></div>
-        <div class="gl">Hiển thị theo nhóm làm việc (Ban Giám đốc luôn hiện):</div>
+        <div class="bgd">🏛️ <b>Ban Giám đốc</b> (${GROUPS.BGD.m.map(k => esc(S[k][0])).join(', ')}) mặc định có mặt ở tất cả folder, không cần chọn.</div>
+        <div class="gl">Chọn người theo nhóm làm việc:</div>
         <div class="grp" id="gp${fi}"></div>
         <div class="tools"><input class="search" type="search" placeholder="Tìm người (tìm trong tất cả nhóm)…" data-sq="${fi}"></div>
         ${fd.list.map((k, idx) => {
@@ -399,11 +402,11 @@ function showItem(fi){
   applyVis(fi);
 }
 
-/* hiển thị người theo nhóm làm việc: BGĐ luôn hiện, người đã chọn luôn hiện, ô tìm kiếm tìm trong mọi nhóm */
+/* hiển thị người theo nhóm làm việc: người đã chọn luôn hiện, ô tìm kiếm tìm trong mọi nhóm */
 function applyVis(fi){
   const box = document.querySelector(`.fold[data-fi="${fi}"]`), f = st[fi], fd = FOLDERS[cur][fi];
   if (!Array.isArray(f.g)) f.g = fd.def.slice();
-  const act = new Set(['BGD', ...f.g]);
+  const act = new Set(f.g);
   $('gp' + fi).innerHTML = GORDER.filter(g => g !== 'BGD').map(g => `<button type="button" class="${act.has(g) ? 'on' : ''}" data-grp="${fi}:${g}">${esc(GROUPS[g].label)}</button>`).join('');
   const q = strip((box.querySelector(`[data-sq="${fi}"]`).value || '').trim());
   const sel = new Set(); f.items.forEach(x => Object.keys(x.sel).forEach(k => sel.add(k)));
@@ -499,7 +502,8 @@ $('next').addEventListener('click', () => {
   $('meta').innerHTML = `<b>${esc(d.mgrName)}</b> · ${esc(d.mgr)}<br>${esc(d.time)}${d.note ? '<br>Ghi chú: ' + esc(d.note) : ''}`;
   const by = {};
   d.rows.forEach(r => (by[r.folder] = by[r.folder] || []).push(r));
-  $('sumList').innerHTML = Object.keys(by).map(f => `<div class="sum"><h3>${f.split(' › ').length > 2 ? '📄' : '📁'} ${esc(f)}</h3>${
+  const bgdNote = `<div class="sum"><h3>🏛️ Ban Giám đốc</h3><div class="e" style="font-size:13px;color:var(--muted)">Mặc định có mặt ở tất cả folder, không cần cấp thêm.</div></div>`;
+  $('sumList').innerHTML = bgdNote + Object.keys(by).map(f => `<div class="sum"><h3>${f.split(' › ').length > 2 ? '📄' : '📁'} ${esc(f)}</h3>${
     by[f].map(r => `<div class="row"><div><div>${esc(r.name)}</div><div class="e">${esc(r.email)}</div></div><div class="r">${r.ext ? '' : esc(r.perm)}</div></div>`).join('')}</div>`).join('');
   go(3);
 });
@@ -508,6 +512,7 @@ $('back').addEventListener('click', () => go(2));
 function asText(d){
   let t = `ĐỀ NGHỊ PHÂN QUYỀN SHARED DRIVE\nNgười đề nghị: ${d.mgrName} (${d.mgr})\nThời gian: ${d.time}\n`;
   if (d.note) t += `Ghi chú: ${d.note}\n`;
+  t += `Ban Giám đốc: mặc định có mặt ở tất cả folder.\n`;
   const by = {};
   d.rows.forEach(r => (by[r.folder] = by[r.folder] || []).push(r));
   Object.keys(by).forEach(f => {

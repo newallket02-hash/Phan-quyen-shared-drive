@@ -107,3 +107,7 @@ Bước "Bạn là ai?" chỉ còn 22 QL có trong cột G của Excel: dung.pql
 - `9_KT - Tai Chinh` chuyển cho `thu.qlkt@goldenmg.com` (Quản lý kế toán chung); `10_Big Boss - BAN GIAM DOC` chuyển cho `trinh.gd@goldenmg.com` (Ban Giám đốc). Cột G sheet `Cay Thu Muc` đã cập nhật cho `9_KT - Tai Chinh`.
 - `khanh.da@goldenmg.com` còn trong cột G gốc nhưng đã bị loại theo yêu cầu trước; `thanh.tqlmkt@goldenmg.com` trong cột G gốc là gõ nhầm, trang dùng `thanh.qlmkt@goldenmg.com`.
 - Ban Giám đốc không có Ms. Dương (pháp lý): danh sách trên trang không có `legal@goldenlotus.world`.
+
+## Ban Giám đốc không còn trong danh sách chọn quyền
+
+Ban Giám đốc (Boss, Nguyễn Thị Trinh, Lê Thị Thu Trinh) mặc định có mặt ở tất cả folder nên đã bỏ khỏi danh sách chọn quyền của các team. Mỗi folder hiển thị một dòng ghi chú, màn hình tổng hợp và nội dung copy/gửi cũng ghi "Ban Giám đốc: mặc định có mặt ở tất cả folder". Ô tìm kiếm cũng không tìm ra BGĐ. Sheet `Nhom lam viec` trong Excel vẫn liệt kê nhóm BGĐ để tham chiếu.
