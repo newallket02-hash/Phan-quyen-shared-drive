@@ -111,3 +111,7 @@ Bước "Bạn là ai?" chỉ còn 22 QL có trong cột G của Excel: dung.pql
 ## Ban Giám đốc không còn trong danh sách chọn quyền
 
 Ban Giám đốc (Boss, Nguyễn Thị Trinh, Lê Thị Thu Trinh) mặc định có mặt ở tất cả folder nên đã bỏ khỏi danh sách chọn quyền của các team. Mỗi folder hiển thị một dòng ghi chú, màn hình tổng hợp và nội dung copy/gửi cũng ghi "Ban Giám đốc: mặc định có mặt ở tất cả folder". Ô tìm kiếm cũng không tìm ra BGĐ. Sheet `Nhom lam viec` trong Excel vẫn liệt kê nhóm BGĐ để tham chiếu.
+
+## Ô "Mail cá nhân của các thành viên khác"
+
+Ô "Ghi chú chung" ở cuối bước 2 đã đổi thành ô nhập mail cá nhân của các thành viên chưa có trong danh sách (mỗi email một dòng, ghi thêm quyền và folder). Nội dung này hiện thành một mục riêng ở màn hình tổng hợp, trong nội dung copy/gửi Zalo/Email và trong cột cuối của file CSV. Chỉ nhập mail mà chưa chọn người nào vẫn bấm được "Xem tổng hợp".

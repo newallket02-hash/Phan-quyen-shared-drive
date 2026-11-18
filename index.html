@@ -122,8 +122,9 @@ textarea{width:100%;font:inherit;font-size:16px;border:1px solid var(--line);bor
     <p class="hint">Mở từng folder → chọn <b>Toàn bộ folder</b> hoặc từng <b>file con</b> → bấm mức quyền cho người cần cấp. Bấm lại để bỏ chọn. File con chưa có trong danh sách thì bấm <b>＋ File con</b> để thêm. Ban Giám đốc mặc định có mặt ở mọi folder nên không cần chọn; người ở nhóm khác thì bật nút nhóm hoặc dùng ô tìm kiếm.</p>
     <div id="folders"></div>
     <div class="sum">
-      <h3>Ghi chú chung (nếu có)</h3>
-      <textarea id="note" rows="2" placeholder="VD: cấp tạm đến hết tháng 12"></textarea>
+      <h3>Mail cá nhân của các thành viên khác (nếu có)</h3>
+      <p class="hint" style="margin:0 0 8px">Người chưa có trong danh sách trên: nhập mỗi email một dòng, ghi thêm quyền và folder cần cấp.</p>
+      <textarea id="note" rows="3" placeholder="VD: abc@gmail.com – Xem – VH - Q7&#10;xyz@gmail.com – Sửa – toàn bộ folder"></textarea>
     </div>
   </section>
 
@@ -471,7 +472,7 @@ $('folders').addEventListener('input', e => {
   if (t.dataset.sq !== undefined) applyVis(+t.dataset.sq);
 });
 $('folders').addEventListener('change', e => { if (e.target.dataset.ext !== undefined) showItem(+e.target.dataset.ext); });
-$('note').addEventListener('input', save);
+$('note').addEventListener('input', () => { save(); refresh(); });
 
 function refresh(){
   let total = 0, fc = 0;
@@ -482,7 +483,7 @@ function refresh(){
     const bd = $('bd' + fi); if (bd){ bd.textContent = n; bd.classList.toggle('has', any); }
   });
   $('bCnt').textContent = total; $('bF').textContent = fc + ' folder';
-  $('next').disabled = fc === 0;
+  $('next').disabled = fc === 0 && !$('note').value.trim();
 }
 
 /* BƯỚC 3 */
@@ -499,19 +500,19 @@ function collect(){
 }
 $('next').addEventListener('click', () => {
   const d = collect();
-  $('meta').innerHTML = `<b>${esc(d.mgrName)}</b> · ${esc(d.mgr)}<br>${esc(d.time)}${d.note ? '<br>Ghi chú: ' + esc(d.note) : ''}`;
+  $('meta').innerHTML = `<b>${esc(d.mgrName)}</b> · ${esc(d.mgr)}<br>${esc(d.time)}`;
   const by = {};
   d.rows.forEach(r => (by[r.folder] = by[r.folder] || []).push(r));
   const bgdNote = `<div class="sum"><h3>🏛️ Ban Giám đốc</h3><div class="e" style="font-size:13px;color:var(--muted)">Mặc định có mặt ở tất cả folder, không cần cấp thêm.</div></div>`;
+  const mailCard = d.note ? `<div class="sum"><h3>✉️ Mail cá nhân của các thành viên khác</h3><div class="e" style="font-size:13px;color:#1f2937">${esc(d.note).replace(/\n/g, '<br>')}</div></div>` : '';
   $('sumList').innerHTML = bgdNote + Object.keys(by).map(f => `<div class="sum"><h3>${f.split(' › ').length > 2 ? '📄' : '📁'} ${esc(f)}</h3>${
-    by[f].map(r => `<div class="row"><div><div>${esc(r.name)}</div><div class="e">${esc(r.email)}</div></div><div class="r">${r.ext ? '' : esc(r.perm)}</div></div>`).join('')}</div>`).join('');
+    by[f].map(r => `<div class="row"><div><div>${esc(r.name)}</div><div class="e">${esc(r.email)}</div></div><div class="r">${r.ext ? '' : esc(r.perm)}</div></div>`).join('')}</div>`).join('') + mailCard;
   go(3);
 });
 $('back').addEventListener('click', () => go(2));
 
 function asText(d){
   let t = `ĐỀ NGHỊ PHÂN QUYỀN SHARED DRIVE\nNgười đề nghị: ${d.mgrName} (${d.mgr})\nThời gian: ${d.time}\n`;
-  if (d.note) t += `Ghi chú: ${d.note}\n`;
   t += `Ban Giám đốc: mặc định có mặt ở tất cả folder.\n`;
   const by = {};
   d.rows.forEach(r => (by[r.folder] = by[r.folder] || []).push(r));
@@ -519,6 +520,7 @@ function asText(d){
     t += `\n📁 ${f}\n`;
     by[f].forEach(r => t += r.ext ? `  • Email ngoài: ${r.email}\n` : `  • ${r.name} (${r.email}): ${r.perm}\n`);
   });
+  if (d.note) t += `\n✉️ Mail cá nhân của các thành viên khác:\n${d.note.split('\n').map(l => '  • ' + l.trim()).filter(l => l.length > 4).join('\n')}\n`;
   return t;
 }
 function copyText(t){
@@ -534,7 +536,7 @@ $('share').addEventListener('click', async () => {
 });
 $('csv').addEventListener('click', () => {
   const d = collect(), q = s => '"' + String(s).replace(/"/g,'""') + '"';
-  let csv = '\uFEFF' + ['Thời gian','Người đề nghị','Email đề nghị','Folder','Họ tên','Email được cấp','Quyền','Ghi chú'].map(q).join(',') + '\n';
+  let csv = '\uFEFF' + ['Thời gian','Người đề nghị','Email đề nghị','Folder','Họ tên','Email được cấp','Quyền','Mail cá nhân thành viên khác (chung)'].map(q).join(',') + '\n';
   d.rows.forEach(r => csv += [d.time, d.mgrName, d.mgr, r.folder, r.name, r.email, r.perm, d.note].map(q).join(',') + '\n');
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv;charset=utf-8'}));
