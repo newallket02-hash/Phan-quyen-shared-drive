@@ -58,7 +58,9 @@ Danh sách đầy đủ các cấp nằm trong sheet `Thu muc con (anh chup)` c�
 
 Cần xác nhận:
 - Ảnh có tiêu đề "VH - Q7" nhưng nội dung là `3_VH`, `TÀI LIỆU ĐÀO TẠO` và 1 file Excel: theo video quay màn hình, Drive đổi tiêu đề trước khi tải xong nội dung, nên khả năng cao đây là nội dung của `HCM_Q7`. Mình ghi vào sheet Excel dưới `VH - Q7 › HCM_Q7` kèm ghi chú "cần xác nhận".
-- `MKT - ONLINE` mới chụp đến `ONL_Share`, phần bên dưới chưa chụp.
+- `MKT - ONLINE` đã xem nội dung của APP LOYALTY, BUDGET, BUS - GOLDEN LOTUS, MASTER PLAN, Mr. Minh, ONL_Nhan Vien. Chưa tải được nội dung: Data - Promo - thống kê MKT, DESIGN, ONL_Share, Ca Nhan_Mr Minh. Danh sách cấp 1 của thư mục này có thể còn mục bên dưới `ONL_Share`.
+- `MKT - OFFLINE`: chưa tải được nội dung OFF_Share, PPT (trong GLC PRODUCTION), Bao Gia, Chinh sach khach doan, Manual Membership App 2026. `Booking` là lối tắt, bên trong là các thư mục theo năm 2018–2023 và có thể còn tiếp.
+- Ảnh đầu video thứ hai: drive 11 người, 0,0 KB trong danh sách Shared Drive, khớp `3_Branch Event plan` (11 TV), nên khả năng drive này đang trống.
 - Một số danh sách cuộn chưa hết (VH - Q1 › Đào Tạo, OPS, VH_ Baocao; VH - Q2 › 1. Đào tạo › CHƯƠNG TRÌNH ĐÀO TẠO HCM); sheet Excel có dòng "(còn mục bên dưới, chưa chụp hết)".
 - Một số tên bị cắt trong ảnh (có dấu …).
 - Thư mục rỗng: VH - 63HB, VH - 76HV, NS_Q7, NS_100TBD, NS_76HV, KT - Tổng Hợp.
