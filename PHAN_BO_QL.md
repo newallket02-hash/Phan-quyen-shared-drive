@@ -62,6 +62,15 @@ Danh sách đầy đủ các cấp nằm trong sheet `Thu muc con (anh chup)` c�
 - `3_Bao Tri` (7 người) và `3_Branch Event plan` (11 người) đều hiển thị 0,0 KB trong danh sách Shared Drive, nên hai drive này đang trống.
 - `9_KT - KE TOAN (Noi bo)`: cả 6 thư mục cấp 2 đều có biểu tượng hạn chế quyền.
 
+## Bổ sung: 9_NS_Cty (từ bảng tổng hợp video)
+
+Đã thêm toàn bộ cấu trúc `9_NS_Cty` vào sheet Excel (các cấp sâu) và đưa mục con cấp 1 lên trang cho 7 folder: `1. Hồ sơ nội bộ` (10), `2. Chi tiêu lương tuyển Nv - Bonus` (11), `3. Form cam kết. Cty` (4), `4. Thông báo Cty` (3), `NS_Nhan Vien (File cá nhân tự làm)` (6), `NS_Share` (2), `Team NS. Làm việc chung` (7).
+
+- `NS_Nhan Vien` chứa thư mục cá nhân của nhân sự NS (Ms 01 - Cty QLNS, Ms Dung - HCNS, Ms Ly - Tuyển Dụng, Ms Mai - Q2, Ms Phương - Ns 02, Ms Việt - Share). Đang gán cho `nhansu@goldenlotus.world`.
+- Danh sách Shared Drive ở cuối video có `10_Big Boss - BAN GIAM DOC`, xác nhận drive này có thật; vẫn chưa có người phụ trách.
+- `Cty Can Tuyen Dung N.V`: bảng ghi Google Docs, ảnh chụp trước đó có biểu tượng Google Sheet; trong Excel mình ghi Google Sheet, cần xác nhận.
+- Chưa xem được nội dung: `KPI- Đánh giá hiệu quả công việc`, `Đăng ky noi quy LD Cty GM 10…`, `Quy trinh-Quy che`, `Mau Tính thưởng Bonus Spa H…`, `bonus 19.9.25 Q2`, `Teambuilding 11. 2026`, `Ms Dung - HCNS`, `Ms Ly - Tuyển Dụng`, `BHXH-2026`.
+
 Cần xác nhận:
 - Ảnh có tiêu đề "VH - Q7" nhưng nội dung là `3_VH`, `TÀI LIỆU ĐÀO TẠO` và 1 file Excel: theo video quay màn hình, Drive đổi tiêu đề trước khi tải xong nội dung, nên khả năng cao đây là nội dung của `HCM_Q7`. Mình ghi vào sheet Excel dưới `VH - Q7 › HCM_Q7` kèm ghi chú "cần xác nhận".
 - `MKT - ONLINE` đã xem nội dung của APP LOYALTY, BUDGET, BUS - GOLDEN LOTUS, MASTER PLAN, Mr. Minh, ONL_Nhan Vien. Chưa tải được nội dung: Data - Promo - thống kê MKT, DESIGN, ONL_Share, Ca Nhan_Mr Minh. Danh sách cấp 1 của thư mục này có thể còn mục bên dưới `ONL_Share`.
