@@ -47,7 +47,7 @@ h2{font-size:18px;color:var(--navy);margin:6px 0 4px}
 .grp{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
 .grp button{font:inherit;font-size:13px;font-weight:600;border:1.5px solid var(--line);background:#fff;color:var(--muted);border-radius:20px;padding:0 12px;min-height:36px;cursor:pointer}
 .grp button.on{background:var(--navy);border-color:var(--navy);color:#fff}
-.gh{font-size:12px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.3px;margin:10px 0 2px;padding:6px 4px 0;border-top:1px solid var(--line)}
+.ghd{font-size:12px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.3px;margin:10px 0 2px;padding:6px 4px 0;border-top:1px solid var(--line)}
 .per .ro{font-size:12px;color:var(--navy);margin:-4px 0 8px}
 .tools{display:flex;gap:8px;margin-bottom:8px}
 .tools .search{margin:0;padding-top:10px;padding-bottom:10px;font-size:15px}
@@ -133,9 +133,11 @@ textarea{width:100%;font:inherit;font-size:16px;border:1px solid var(--line);bor
     <div class="meta" id="meta"></div>
     <div id="sumList"></div>
     <div class="acts">
-      <button class="btn pri" id="sheet" style="margin-left:0;display:none">📊 Gửi vào Google Sheet</button>
-      <div class="meta" id="sheetMsg" style="display:none;margin:0"></div>
-      <button class="btn pri" id="share" style="margin-left:0">📤 Gửi qua Zalo / Email</button>
+      <div class="meta" style="margin:0">Kết quả sẽ được gửi tới:<br><b id="mailTo"></b></div>
+      <button class="btn pri" id="mail" style="margin-left:0">📧 Gửi email</button>
+      <button class="btn nav" id="gmail">📬 Mở bằng Gmail (web)</button>
+      <div class="meta" style="margin:0">Bấm <b>Gửi email</b>: ứng dụng email trên máy sẽ mở sẵn người nhận và nội dung, bạn chỉ cần bấm <b>Gửi</b>. Nội dung cũng được copy sẵn để dán nếu email không tự điền.</div>
+      <button class="btn gh" id="share">📤 Chia sẻ qua Zalo / ứng dụng khác</button>
       <button class="btn nav" id="copy">📋 Copy nội dung</button>
       <button class="btn gh" id="csv">⬇️ Tải file CSV (Excel)</button>
       <button class="btn gh" id="back">← Quay lại chỉnh sửa</button>
@@ -150,8 +152,8 @@ textarea{width:100%;font:inherit;font-size:16px;border:1px solid var(--line);bor
 <div class="toast" id="toast"></div>
 
 <script>
-/* Địa chỉ web app (Apps Script) ghi vào Google Sheet. Để trống = ẩn nút "Gửi vào Google Sheet". */
-let SHEET_URL = '';
+/* Email nhận kết quả phân quyền */
+const MAIL_TO = ['truc.tl@goldenmg.com', 'tlns@goldenlotus.world'];
 
 /* ===== DỮ LIỆU NHÂN SỰ: key · [họ tên, email, vai trò] ===== */
 const S = {
@@ -374,7 +376,7 @@ function drawFolders(){
         <div class="grp" id="gp${fi}"></div>
         <div class="tools"><input class="search" type="search" placeholder="Tìm người (tìm trong tất cả nhóm)…" data-sq="${fi}"></div>
         ${fd.list.map((k, idx) => {
-          const pr = PG[k][0], head = idx === 0 || PG[fd.list[idx - 1]][0] !== pr ? `<div class="gh" data-gh="${pr}">${esc(GROUPS[pr].label)}</div>` : '';
+          const pr = PG[k][0], head = idx === 0 || PG[fd.list[idx - 1]][0] !== pr ? `<div class="ghd" data-gh="${pr}">${esc(GROUPS[pr].label)}</div>` : '';
           return head + `<div class="per" data-k="${k}" data-g="${PG[k].join(' ')}" data-s="${esc(strip(S[k][0] + ' ' + S[k][1] + ' ' + S[k][2]))}">
           <div class="n">${esc(S[k][0])}</div><div class="e">${esc(S[k][1])}</div><div class="ro">${esc(S[k][2])}</div>
           <div class="seg">${PERMS.map(p => `<button type="button" data-p="${p}">${SHORT[p]}</button>`).join('')}</div></div>`; }).join('')}
@@ -418,7 +420,7 @@ function applyVis(fi){
     const show = q ? p.dataset.s.includes(q) : sel.has(p.dataset.k) || p.dataset.g.split(' ').some(g => act.has(g));
     p.style.display = show ? '' : 'none';
   });
-  box.querySelectorAll('.gh').forEach(h => {
+  box.querySelectorAll('.ghd').forEach(h => {
     let n = h.nextElementSibling, any = false;
     while (n && n.classList.contains('per')){ if (n.style.display !== 'none') any = true; n = n.nextElementSibling; }
     h.style.display = any ? '' : 'none';
@@ -510,31 +512,38 @@ $('next').addEventListener('click', () => {
   const mailCard = d.note ? `<div class="sum"><h3>✉️ Mail cá nhân của các thành viên khác</h3><div class="e" style="font-size:13px;color:#1f2937">${esc(d.note).replace(/\n/g, '<br>')}</div></div>` : '';
   $('sumList').innerHTML = bgdNote + Object.keys(by).map(f => `<div class="sum"><h3>${f.split(' › ').length > 2 ? '📄' : '📁'} ${esc(f)}</h3>${
     by[f].map(r => `<div class="row"><div><div>${esc(r.name)}</div><div class="e">${esc(r.email)}</div></div><div class="r">${r.ext ? '' : esc(r.perm)}</div></div>`).join('')}</div>`).join('') + mailCard;
-  $('sheet').style.display = SHEET_URL ? '' : 'none';
-  $('sheet').disabled = false; $('sheet').textContent = '📊 Gửi vào Google Sheet';
-  $('sheetMsg').style.display = 'none';
-  subId = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+  $('mailTo').textContent = MAIL_TO.join(', ');
   go(3);
 });
 $('back').addEventListener('click', () => go(2));
 
-let subId = '';
-$('sheet').addEventListener('click', async () => {
-  const d = collect(), btn = $('sheet'), msg = $('sheetMsg');
-  if (!d.rows.length && !d.note) { toast('Chưa có nội dung để gửi'); return; }
-  btn.disabled = true; btn.textContent = 'Đang gửi…'; msg.style.display = 'none';
-  try {
-    const r = await fetch(SHEET_URL, {method:'POST', body:JSON.stringify({id:subId, mgr:d.mgr, mgrName:d.mgrName, time:d.time, note:d.note, rows:d.rows})});
-    const j = await r.json();
-    if (!j.ok) throw new Error(j.error || 'Lỗi không rõ');
-    btn.textContent = '✅ Đã gửi vào Google Sheet';
-    msg.textContent = j.dup ? 'Nội dung này đã được gửi trước đó.' : `Đã ghi ${j.count} dòng vào Google Sheet. Có thể gửi thêm qua Zalo/Email nếu cần.`;
-    msg.style.display = '';
-  } catch (e) {
-    btn.disabled = false; btn.textContent = '📊 Gửi vào Google Sheet';
-    msg.textContent = 'Không gửi được vào Google Sheet. Hãy bấm "Gửi qua Zalo / Email" hoặc "Copy nội dung" để gửi thủ công.';
-    msg.style.display = '';
+/* Gửi email: mở ứng dụng email (mailto) hoặc Gmail web với người nhận, tiêu đề, nội dung điền sẵn */
+function mailInfo(){
+  const d = collect(), enc = encodeURIComponent;
+  const n = d.rows.filter(r => !r.ext).length;
+  const subject = `[Phân quyền Shared Drive] ${d.mgrName} - ${n} quyền`;
+  const full = asText(d);
+  let body = full, cut = false;
+  if (enc(body).length > 6000){
+    body = full.slice(0, 1500) + '\n…\n(Nội dung đầy đủ đã được copy sẵn: hãy dán (Paste) toàn bộ vào email thay cho phần này.)';
+    cut = true;
   }
+  return {
+    full, cut,
+    mailto: `mailto:${MAIL_TO.join(',')}?subject=${enc(subject)}&body=${enc(body.replace(/\n/g, '\r\n'))}`,
+    gmail: `https://mail.google.com/mail/?view=cm&fs=1&to=${enc(MAIL_TO.join(','))}&su=${enc(subject)}&body=${enc(body)}`
+  };
+}
+$('mail').addEventListener('click', () => {
+  const u = mailInfo();
+  copyText(u.full).catch(() => {});
+  toast(u.cut ? 'Nội dung dài: đã copy sẵn, hãy dán vào email' : 'Đang mở email… (nội dung đã được copy)');
+  location.href = u.mailto;
+});
+$('gmail').addEventListener('click', () => {
+  const u = mailInfo();
+  copyText(u.full).catch(() => {});
+  window.open(u.gmail, '_blank');
 });
 
 function asText(d){
